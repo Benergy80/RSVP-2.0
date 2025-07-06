@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSVP Gallery 2.0 - Enhanced Construction Timeline</title>
+    <title>RSVP Gallery 2.0 - Construction Timeline</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -26,6 +26,11 @@
             color: white;
             border: 1px solid rgba(0,0,0,0.1);
             user-select: none;
+            text-align: center;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding: 0 8px;
+            box-sizing: border-box;
         }
         .gantt-bar:hover {
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -63,7 +68,7 @@
             border-radius: 50%;
             position: absolute;
             top: 10px;
-            transform: translateX(-50%);
+            right: -6px;
             border: 2px solid white;
             z-index: 10;
         }
@@ -76,6 +81,7 @@
         }
         .gantt-container {
             overflow-x: auto;
+            overflow-y: visible;
             scrollbar-width: thin;
             scrollbar-color: #9ca3af #f3f4f6;
             -webkit-overflow-scrolling: touch;
@@ -90,14 +96,23 @@
             background: #9ca3af;
         }
         .date-cell {
-            min-width: 80px;
+            min-width: 120px;
             height: 100%;
             border-right: 1px solid #e5e7eb;
             transition: background-color 0.2s ease;
+            flex-shrink: 0;
         }
         .date-cell:hover {
             background-color: #f9fafb;
         }
+        .gantt-row {
+            position: relative;
+            min-height: 50px;
+            width: 100%;
+            overflow: visible;
+            padding-right: 20px;
+        }
+
         .task-details {
             max-height: 0;
             overflow: hidden;
@@ -173,6 +188,7 @@
         }
         .task-row {
             transition: all 0.2s ease;
+            overflow: visible;
         }
         .task-row:hover {
             background-color: #f9fafb;
@@ -269,10 +285,7 @@
                 font-size: 10px;
             }
             .date-cell {
-                min-width: 70px;
-            }
-            .phase-header {
-                font-size: 14px;
+                min-width: 100px;
             }
             .task-checkbox {
                 width: 20px;
@@ -303,8 +316,8 @@
         }
         
         @media (min-width: 769px) and (max-width: 1024px) {
-            .phase-header {
-                min-width: 320px;
+            .date-cell {
+                min-width: 110px;
             }
         }
     </style>
@@ -320,7 +333,7 @@
                     </div>
                     <div>
                         <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">RSVP Gallery 2.0</h1>
-                        <p class="text-gray-600">High-End Retail Gallery Buildout</p>
+                        <p class="text-gray-600">Retail Gallery Buildout</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
@@ -410,7 +423,7 @@
                             </div>
                         </div>
                         <p class="text-sm text-blue-700 mb-3">Permits & Pre-Construction</p>
-                        <div id="phase-1-weeks" class="text-xs text-blue-600 mb-2">Weeks 1-4</div>
+                        <div id="phase-1-weeks" class="text-xs text-blue-600 mb-2">TBD</div>
                         <div class="progress-bar mb-2">
                             <div id="phase-1-progress" class="progress-fill bg-blue-500" style="width: 0%"></div>
                         </div>
@@ -429,7 +442,7 @@
                             </div>
                         </div>
                         <p class="text-sm text-green-700 mb-3">Sub-Slab MEP & Concrete</p>
-                        <div id="phase-2-weeks" class="text-xs text-green-600 mb-2">Weeks 5-8</div>
+                        <div id="phase-2-weeks" class="text-xs text-green-600 mb-2">TBD</div>
                         <div class="progress-bar mb-2">
                             <div id="phase-2-progress" class="progress-fill bg-green-500" style="width: 0%"></div>
                         </div>
@@ -448,7 +461,7 @@
                             </div>
                         </div>
                         <p class="text-sm text-yellow-700 mb-3">Framing & Above-Slab MEP</p>
-                        <div id="phase-3-weeks" class="text-xs text-yellow-600 mb-2">Weeks 9-12</div>
+                        <div id="phase-3-weeks" class="text-xs text-yellow-600 mb-2">TBD</div>
                         <div class="progress-bar mb-2">
                             <div id="phase-3-progress" class="progress-fill bg-yellow-500" style="width: 0%"></div>
                         </div>
@@ -467,7 +480,7 @@
                             </div>
                         </div>
                         <p class="text-sm text-orange-700 mb-3">Finishes & Custom Elements</p>
-                        <div id="phase-4-weeks" class="text-xs text-orange-600 mb-2">Weeks 13-16</div>
+                        <div id="phase-4-weeks" class="text-xs text-orange-600 mb-2">TBD</div>
                         <div class="progress-bar mb-2">
                             <div id="phase-4-progress" class="progress-fill bg-orange-500" style="width: 0%"></div>
                         </div>
@@ -486,7 +499,7 @@
                             </div>
                         </div>
                         <p class="text-sm text-purple-700 mb-3">Final Completion</p>
-                        <div id="phase-5-weeks" class="text-xs text-purple-600 mb-2">Weeks 17-18</div>
+                        <div id="phase-5-weeks" class="text-xs text-purple-600 mb-2">TBD</div>
                         <div class="progress-bar mb-2">
                             <div id="phase-5-progress" class="progress-fill bg-purple-500" style="width: 0%"></div>
                         </div>
@@ -529,7 +542,7 @@
                             <i class="fas fa-print mr-2"></i>Print
                         </button>
                         <button id="export-timeline" class="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700 focus:outline-none transition-colors rounded-lg">
-                            <i class="fas fa-download mr-2"></i>Export
+                            <i class="fas fa-file-pdf mr-2"></i>Export PDF
                         </button>
                     </div>
                 </div>
@@ -585,16 +598,12 @@
                     </div>
                 </div>
                 
+
+
                 <!-- Date Header -->
                 <div class="gantt-container mb-4">
                     <div class="flex border-b-2 border-gray-200">
-                        <div class="phase-header w-80 px-4 py-3 font-semibold text-gray-700 bg-gray-50">
-                            <div class="flex items-center">
-                                <i class="fas fa-tasks mr-2 text-blue-500"></i>
-                                Phase / Activity
-                            </div>
-                        </div>
-                        <div id="week-headers" class="flex min-w-max">
+                        <div id="week-headers" class="flex min-w-max w-full" style="padding-right: 20px;">
                             <!-- Week headers will be generated here -->
                         </div>
                     </div>
@@ -640,7 +649,7 @@
         <!-- Footer -->
         <div class="text-center text-sm text-gray-500 mt-8 p-4 bg-white shadow-sm">
             <p class="mb-2">© 2025 ChiLab Studio LLC • General Contractor • Max Davis Group Subcontractor Support</p>
-            <p>Enhanced Interactive Project Timeline • Last Updated: <span id="last-updated"></span></p>
+            <p>RSVP 2.0 Project Tracker • Last Updated: <span id="last-updated"></span></p>
         </div>
     </div>
 
@@ -733,19 +742,54 @@
                 setupEventListeners();
             }
 
-            // Generate week headers
+            // Generate week headers with work week dates (Monday-Friday)
             function generateWeekHeaders() {
                 const totalWeeks = getTotalWeeks();
                 const weekHeaderContainer = document.getElementById('week-headers');
                 weekHeaderContainer.innerHTML = '';
                 
+                const startDateInput = document.getElementById('start-date');
+                const hasStartDate = startDateInput.value;
+                
                 for (let i = 0; i < totalWeeks; i++) {
                     const weekCell = document.createElement('div');
                     weekCell.className = 'date-cell flex flex-col items-center justify-center px-3 py-2 text-xs font-medium text-gray-600 bg-gray-50 border-r border-gray-200';
                     
+                    let weekLabel = 'TBD';
+                    let dateLabel = 'TBD';
+                    let phaseLabel = `Phase ${getPhaseForWeek(i + 1)}`;
+                    
+                    if (hasStartDate) {
+                        const startDate = new Date(startDateInput.value);
+                        
+                        // Calculate the Monday of the work week
+                        const weekStartDate = new Date(startDate);
+                        weekStartDate.setDate(startDate.getDate() + (i * 7));
+                        
+                        // Adjust to Monday if not already Monday (0 = Sunday, 1 = Monday, etc.)
+                        const dayOfWeek = weekStartDate.getDay();
+                        const daysToMonday = dayOfWeek === 0 ? 1 : (dayOfWeek === 1 ? 0 : 8 - dayOfWeek);
+                        weekStartDate.setDate(weekStartDate.getDate() - dayOfWeek + 1);
+                        
+                        // Calculate Friday of the same week
+                        const weekEndDate = new Date(weekStartDate);
+                        weekEndDate.setDate(weekStartDate.getDate() + 4);
+                        
+                        weekLabel = `Week ${i + 1}`;
+                        
+                        // Format as M/D - M/D
+                        const startMonth = weekStartDate.getMonth() + 1;
+                        const startDay = weekStartDate.getDate();
+                        const endMonth = weekEndDate.getMonth() + 1;
+                        const endDay = weekEndDate.getDate();
+                        
+                        dateLabel = `${startMonth}/${startDay} - ${endMonth}/${endDay}`;
+                    }
+                    
                     weekCell.innerHTML = `
-                        <div class="font-bold text-gray-700">Week ${i + 1}</div>
-                        <div class="text-gray-500 mt-1">Phase ${getPhaseForWeek(i + 1)}</div>
+                        <div class="font-bold text-gray-700">${weekLabel}</div>
+                        <div class="text-gray-500 mt-1">${dateLabel}</div>
+                        <div class="text-gray-400 text-xs mt-1">${phaseLabel}</div>
                     `;
                     
                     weekHeaderContainer.appendChild(weekCell);
@@ -754,6 +798,8 @@
                 // Update total duration display
                 document.getElementById('total-duration').textContent = `${totalWeeks} Week Duration`;
             }
+
+
 
             // Save and restore checkbox states when regenerating
             function saveCheckboxStates() {
@@ -786,6 +832,7 @@
                 // Update progress bars after restoring states
                 updateProgress();
             }
+
             function getPhaseTaskDetails(phaseNum, phase, isExtended) {
                 const taskData = {
                     1: {
@@ -837,7 +884,7 @@
                                     { id: 'daily-coordination', text: 'Daily coordination with landlord\'s concrete contractor', architect: false },
                                     { id: 'mep-pass-required', text: 'Sub-slab MEP MUST pass inspection before concrete', architect: false, important: true },
                                     { id: 'truck-access', text: 'Maintain cement truck access throughout', architect: false },
-                                    { id: 'cure-time', text: 'Monitor 28-day cure time before polished concrete', architect: false }
+                                    { id: 'cure-time', text: 'Monitor 28-day cure time before concrete sealer', architect: false }
                                 ]
                             }
                         ]
@@ -874,7 +921,7 @@
                                 tasks: [
                                     { id: 'interior-painting', text: 'Interior painting and trim work', architect: false },
                                     { id: 'mep-trimout', text: 'MEP trim-out and fixtures', architect: false },
-                                    { id: 'polished-concrete', text: 'Polished concrete (after 28-day cure)', architect: false },
+                                    { id: 'concrete-sealer', text: 'Concrete sealer (after 28-day cure)', architect: false },
                                     { id: 'custom-millwork', text: 'Custom millwork installation', architect: false }
                                 ]
                             },
@@ -973,6 +1020,7 @@
                 html += '</div>';
                 return html;
             }
+
             function generateGanttChart() {
                 const ganttPhasesContainer = document.getElementById('gantt-phases');
                 ganttPhasesContainer.innerHTML = '';
@@ -987,9 +1035,13 @@
                     const phaseDiv = document.createElement('div');
                     phaseDiv.className = 'mb-8';
                     
-                    // Calculate position and width for Gantt bar
-                    const leftPercent = ((phase.startWeek - 1) / totalWeeks) * 100;
-                    const widthPercent = (phase.currentDuration / totalWeeks) * 100;
+                    // Calculate position and width for Gantt bar (reserve 2% for graphics)
+                    const effectiveWidth = 98; // Use 98% to leave room for milestone/alert graphics
+                    const leftPercent = ((phase.startWeek - 1) / totalWeeks) * effectiveWidth;
+                    const widthPercent = (phase.currentDuration / totalWeeks) * effectiveWidth;
+                    
+                    // Get formatted date ranges
+                    const dateRangeText = getPhaseDisplayDates(phase.startWeek, endWeek);
                     
                     phaseDiv.innerHTML = `
                         <div class="flex items-center mb-4 p-3 bg-${phase.color}-50 border border-${phase.color}-200">
@@ -1002,7 +1054,7 @@
                                 </p>
                             </div>
                             <div class="text-right">
-                                <div class="text-sm font-medium text-${phase.color}-700">Weeks ${phase.startWeek}-${endWeek}</div>
+                                <div class="text-sm font-medium text-${phase.color}-700">${dateRangeText}</div>
                                 <div class="text-xs text-${phase.color}-600">${phase.budget} budget</div>
                                 ${isExtended ? '<div class="text-xs text-red-600 font-medium">+' + (phase.currentDuration - phase.originalDuration) + ' weeks extended</div>' : ''}
                             </div>
@@ -1010,28 +1062,28 @@
                         
                         <div class="space-y-3">
                             <div class="task-row rounded-lg">
-                                <div class="flex items-center cursor-pointer task-toggle p-2 rounded-lg hover:bg-gray-50" data-target="phase${phaseNum}-details">
-                                    <div class="w-80 px-4 py-3 font-medium text-gray-700 phase-header flex items-center">
+                                <div class="cursor-pointer task-toggle p-2 rounded-lg hover:bg-gray-50 mb-2" data-target="phase${phaseNum}-details">
+                                    <div class="flex items-center mb-3">
                                         <i class="fas fa-caret-right mr-3 transition-transform text-${phase.color}-500"></i>
                                         <div>
                                             <div class="font-medium">${phase.name}</div>
-                                            <div class="text-xs text-gray-500">Weeks ${phase.startWeek}-${endWeek} (${phase.currentDuration} weeks)</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 flex relative" style="min-height: 50px;">
-                                        <div class="gantt-bar ${isExtended ? 'extended-phase' : `bg-gradient-to-r from-${phase.color}-400 to-${phase.color}-500`} ${phase.isCritical ? 'critical-path' : ''} absolute" 
-                                             style="left: ${leftPercent}%; width: ${widthPercent}%;"
-                                             data-phase="${phaseNum}"
-                                             data-original-duration="${phase.originalDuration}"
-                                             data-current-duration="${phase.currentDuration}">
-                                            ${phase.name}
-                                            <div class="milestone bg-blue-500" style="left: 100%;"></div>
-                                            ${isExtended ? '<div class="extended-indicator">!</div>' : (phase.isCritical ? '<div class="risk-indicator">!</div>' : '')}
-                                            <div class="resize-handle" data-phase="${phaseNum}"></div>
+                                            <div class="text-xs text-gray-500">${dateRangeText} (${phase.currentDuration} weeks)</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="phase${phaseNum}-details" class="task-details pl-80 ml-4 border-l-2 border-${phase.color}-200">
+                                <div class="gantt-row relative" style="min-height: 50px;">
+                                    <div class="gantt-bar ${isExtended ? 'extended-phase' : `bg-gradient-to-r from-${phase.color}-400 to-${phase.color}-500`} ${phase.isCritical ? 'critical-path' : ''} absolute" 
+                                         style="left: ${leftPercent}%; width: ${widthPercent}%;"
+                                         data-phase="${phaseNum}"
+                                         data-original-duration="${phase.originalDuration}"
+                                         data-current-duration="${phase.currentDuration}">
+                                        ${phase.name}
+                                        <div class="milestone bg-blue-500"></div>
+                                        ${isExtended ? '<div class="extended-indicator">!</div>' : (phase.isCritical ? '<div class="risk-indicator">!</div>' : '')}
+                                        <div class="resize-handle" data-phase="${phaseNum}"></div>
+                                    </div>
+                                </div>
+                                <div id="phase${phaseNum}-details" class="task-details ml-4 border-l-2 border-${phase.color}-200">
                                     ${getPhaseTaskDetails(phaseNum, phase, isExtended)}
                                 </div>
                             </div>
@@ -1050,6 +1102,38 @@
                 setupGanttInteractions();
             }
 
+            // Get formatted date range for phase display using work weeks
+            function getPhaseDisplayDates(startWeek, endWeek) {
+                const startDateInput = document.getElementById('start-date');
+                if (!startDateInput.value) {
+                    return `Weeks ${startWeek}-${endWeek}`;
+                }
+                
+                const startDate = new Date(startDateInput.value);
+                
+                // Calculate Monday of start week
+                const phaseStartDate = new Date(startDate);
+                phaseStartDate.setDate(startDate.getDate() + ((startWeek - 1) * 7));
+                // Adjust to Monday
+                const startDayOfWeek = phaseStartDate.getDay();
+                phaseStartDate.setDate(phaseStartDate.getDate() - startDayOfWeek + 1);
+                
+                // Calculate Friday of end week
+                const phaseEndDate = new Date(startDate);
+                phaseEndDate.setDate(startDate.getDate() + ((endWeek - 1) * 7));
+                // Adjust to Monday first, then add 4 days to get Friday
+                const endDayOfWeek = phaseEndDate.getDay();
+                phaseEndDate.setDate(phaseEndDate.getDate() - endDayOfWeek + 1 + 4);
+                
+                // Format as M/D - M/D
+                const startMonth = phaseStartDate.getMonth() + 1;
+                const startDay = phaseStartDate.getDate();
+                const endMonth = phaseEndDate.getMonth() + 1;
+                const endDay = phaseEndDate.getDate();
+                
+                return `${startMonth}/${startDay} - ${endMonth}/${endDay}`;
+            }
+
             // Generate payment milestones
             function generatePaymentMilestones() {
                 const container = document.getElementById('payment-milestones');
@@ -1057,7 +1141,7 @@
                 
                 paymentMilestones.forEach((milestone, index) => {
                     const adjustedWeek = adjustPaymentMilestoneWeek(milestone.week);
-                    const adjustedTiming = milestone.week === 0 ? milestone.timing : `Week ${adjustedWeek}`;
+                    const adjustedTiming = milestone.week === 0 ? milestone.timing : getPaymentMilestoneDate(adjustedWeek);
                     
                     const milestoneDiv = document.createElement('div');
                     milestoneDiv.className = 'payment-milestone';
@@ -1081,6 +1165,28 @@
                 
                 // Re-attach payment event listeners
                 attachPaymentListeners();
+            }
+
+            // Get payment milestone date using work week format
+            function getPaymentMilestoneDate(week) {
+                const startDateInput = document.getElementById('start-date');
+                if (!startDateInput.value) {
+                    return `Week ${week}`;
+                }
+                
+                const startDate = new Date(startDateInput.value);
+                const milestoneDate = new Date(startDate);
+                milestoneDate.setDate(startDate.getDate() + ((week - 1) * 7));
+                
+                // Adjust to Monday of the work week
+                const dayOfWeek = milestoneDate.getDay();
+                milestoneDate.setDate(milestoneDate.getDate() - dayOfWeek + 1);
+                
+                // Format as M/D
+                const month = milestoneDate.getMonth() + 1;
+                const day = milestoneDate.getDate();
+                
+                return `${month}/${day}`;
             }
 
             // Get total weeks based on current phase durations
@@ -1130,10 +1236,22 @@
                     const isExtended = phase.currentDuration > phase.originalDuration;
                     const endWeek = phase.startWeek + phase.currentDuration - 1;
                     
-                    // Update phase week display
+                    // Update phase week display in overview cards
                     const weekDisplay = document.getElementById(`phase-${phaseNum}-weeks`);
                     if (weekDisplay) {
-                        weekDisplay.textContent = `Weeks ${phase.startWeek}-${endWeek}`;
+                        weekDisplay.textContent = getPhaseDisplayDates(phase.startWeek, endWeek);
+                    }
+                    
+                    // Update status badge
+                    const statusBadge = document.getElementById(`phase-${phaseNum}-status-badge`);
+                    if (statusBadge && phaseNum !== '2') { // Don't change Phase 2 as it's always Critical
+                        if (isExtended) {
+                            statusBadge.textContent = 'Behind';
+                            statusBadge.className = 'text-xs bg-red-200 text-red-800 px-2 py-1';
+                        } else {
+                            statusBadge.textContent = 'Planned';
+                            statusBadge.className = `text-xs bg-${phase.color}-200 text-${phase.color}-800 px-2 py-1`;
+                        }
                     }
                     
                     // Update extended flag
@@ -1150,9 +1268,12 @@
                 // Update project end date
                 updateProjectEndDate();
                 checkScheduleImpact();
+                
+                // Update total duration display
+                document.getElementById('total-duration').textContent = `${getTotalWeeks()} Week Duration`;
             }
 
-            // Update project end date
+            // Update project end date using work week calculation
             function updateProjectEndDate() {
                 const startDateInput = document.getElementById('start-date');
                 const endDateDisplay = document.getElementById('end-date-display');
@@ -1160,8 +1281,13 @@
                 if (startDateInput.value) {
                     const startDate = new Date(startDateInput.value);
                     const totalWeeks = getTotalWeeks();
+                    
+                    // Calculate the Friday of the final work week
                     const endDate = new Date(startDate);
-                    endDate.setDate(startDate.getDate() + (totalWeeks * 7));
+                    endDate.setDate(startDate.getDate() + ((totalWeeks - 1) * 7));
+                    // Adjust to Friday of that week
+                    const dayOfWeek = endDate.getDay();
+                    endDate.setDate(endDate.getDate() - dayOfWeek + 5); // 5 = Friday
                     
                     endDateDisplay.textContent = endDate.toLocaleDateString('en-US', { 
                         year: 'numeric', 
@@ -1254,7 +1380,8 @@
                     if (!isResizing || !dragPhase) return;
                     
                     const deltaX = e.clientX - dragStartX;
-                    const weekWidth = containerWidth / totalWeeks;
+                    const effectiveWidth = containerWidth * 0.98; // Account for reserved space
+                    const weekWidth = effectiveWidth / totalWeeks;
                     const weeksDelta = Math.round(deltaX / weekWidth);
                     
                     let newDuration = Math.max(1, Math.min(12, originalDuration + weeksDelta));
@@ -1316,6 +1443,9 @@
                         generatePaymentMilestones();
                         updatePhaseDisplays();
                         
+                        // Update total duration display
+                        document.getElementById('total-duration').textContent = `${getTotalWeeks()} Week Duration`;
+                        
                         // Restore task completion states
                         restoreCheckboxStates(savedStates);
                         
@@ -1355,46 +1485,83 @@
 
                 // Start date input
                 document.getElementById('start-date').addEventListener('change', function() {
-                    updateProjectEndDate();
+                    generateWeekHeaders();
+                    generateGanttChart();
                     generatePaymentMilestones();
+                    updateProjectEndDate();
                     showNotification('Project dates updated successfully!', 'success');
                 });
 
-                // Export timeline
+                // Export timeline as PDF
                 document.getElementById('export-timeline').addEventListener('click', function() {
-                    const exportData = {
-                        project: 'RSVP Gallery 2.0',
-                        location: '212 N Aberdeen Street, Chicago, IL',
-                        contractor: 'ChiLab Studio LLC',
-                        subcontractor: 'Max Davis Group',
-                        totalBudget: '$450,000',
-                        originalDuration: projectData.originalTotalWeeks,
-                        currentDuration: getTotalWeeks(),
-                        exportDate: new Date().toISOString(),
-                        phases: projectData.phases,
-                        payments: {
-                            totalPaid: totalPaid,
-                            remaining: 450000 - totalPaid,
-                            milestones: paymentMilestones.map((milestone, index) => ({
-                                ...milestone,
-                                adjustedWeek: adjustPaymentMilestoneWeek(milestone.week),
-                                completed: document.getElementById(milestone.id).checked
-                            }))
-                        },
-                        overallProgress: Math.round((Object.values(projectData.phases).reduce((sum, phase) => sum + phase.completedTasks, 0) / projectData.totalTasks) * 100),
-                        scheduleChanges: getTotalWeeks() !== projectData.originalTotalWeeks,
-                        totalExtension: getTotalWeeks() - projectData.originalTotalWeeks
-                    };
+                    // Create a printable version of the timeline
+                    const originalTitle = document.title;
+                    document.title = `RSVP Gallery 2.0 Timeline - ${new Date().toLocaleDateString()}`;
                     
-                    const dataStr = JSON.stringify(exportData, null, 2);
-                    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                    // Add print-specific styles
+                    const printStyles = document.createElement('style');
+                    printStyles.id = 'print-styles';
+                    printStyles.innerHTML = `
+                        @media print {
+                            body { 
+                                -webkit-print-color-adjust: exact !important;
+                                color-adjust: exact !important;
+                                font-size: 12px;
+                            }
+                            .container { 
+                                max-width: none !important; 
+                                padding: 0 !important;
+                                margin: 0 !important;
+                            }
+                            .gantt-container {
+                                overflow: visible !important;
+                            }
+                            .date-cell {
+                                min-width: 80px !important;
+                                font-size: 10px !important;
+                            }
+                            .gantt-bar {
+                                font-size: 9px !important;
+                                height: 24px !important;
+                            }
+                            .payment-milestone {
+                                page-break-inside: avoid;
+                            }
+                            .bg-gradient-to-br,
+                            .bg-gradient-to-r {
+                                background: #f3f4f6 !important;
+                                border: 1px solid #d1d5db !important;
+                            }
+                            .text-blue-800,
+                            .text-green-800,
+                            .text-yellow-800,
+                            .text-orange-800,
+                            .text-purple-800 {
+                                color: #1f2937 !important;
+                            }
+                            @page {
+                                size: landscape;
+                                margin: 0.5in;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(printStyles);
                     
-                    const linkElement = document.createElement('a');
-                    linkElement.setAttribute('href', dataUri);
-                    linkElement.setAttribute('download', `rsvp_gallery_enhanced_timeline_${new Date().toISOString().split('T')[0]}.json`);
-                    linkElement.click();
+                    // Trigger print dialog
+                    setTimeout(() => {
+                        window.print();
+                        
+                        // Cleanup after print
+                        setTimeout(() => {
+                            document.title = originalTitle;
+                            const printStylesElement = document.getElementById('print-styles');
+                            if (printStylesElement) {
+                                printStylesElement.remove();
+                            }
+                        }, 1000);
+                    }, 500);
                     
-                    showNotification('Enhanced timeline data exported successfully!', 'success');
+                    showNotification('PDF export initiated - use your browser print dialog to save as PDF', 'success');
                 });
             }
 
@@ -1409,6 +1576,9 @@
                 generateGanttChart();
                 generatePaymentMilestones();
                 updatePhaseDisplays();
+                
+                // Update total duration display
+                document.getElementById('total-duration').textContent = `${getTotalWeeks()} Week Duration`;
                 
                 // Restore task completion states
                 restoreCheckboxStates(savedStates);
