@@ -124,8 +124,8 @@
             background: #dc2626;
         }
         .extended-phase {
-            border: 2px solid #f59e0b;
-            background: #f59e0b;
+            border: 2px solid #dc2626;
+            background: #dc2626;
             position: relative;
         }
         .extended-indicator {
@@ -134,7 +134,7 @@
             right: -8px;
             width: 16px;
             height: 16px;
-            background: #f59e0b;
+            background: #dc2626;
             border-radius: 50%;
             color: white;
             font-size: 10px;
@@ -148,8 +148,8 @@
             position: absolute;
             top: -20px;
             right: 0;
-            background: #fbbf24;
-            color: #92400e;
+            background: #dc2626;
+            color: #ffffff;
             font-size: 8px;
             padding: 2px 4px;
             border-radius: 4px;
@@ -187,18 +187,6 @@
             padding: 4px 8px;
             background: #f3f4f6;
             color: #374151;
-            border: 1px solid #d1d5db;
-            font-weight: 500;
-        }
-        .week-indicator {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 9px;
-            color: #6b7280;
-            background: white;
-            padding: 2px 6px;
             border: 1px solid #d1d5db;
             font-weight: 500;
         }
@@ -332,7 +320,7 @@
                     </div>
                     <div>
                         <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">RSVP Gallery 2.0</h1>
-                        <p class="text-gray-600">High-End Retail Gallery Buildout - Enhanced Timeline Management</p>
+                        <p class="text-gray-600">High-End Retail Gallery Buildout</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
@@ -418,7 +406,7 @@
                             <h3 class="font-semibold text-blue-800">Phase 1</h3>
                             <div class="flex items-center gap-2">
                                 <span id="phase-1-status-badge" class="text-xs bg-blue-200 text-blue-800 px-2 py-1">Planned</span>
-                                <i id="phase-1-extended-flag" class="fas fa-flag text-amber-500 hidden" title="Schedule Extended"></i>
+                                <i id="phase-1-extended-flag" class="fas fa-flag text-red-500 hidden" title="Schedule Extended"></i>
                             </div>
                         </div>
                         <p class="text-sm text-blue-700 mb-3">Permits & Pre-Construction</p>
@@ -437,7 +425,7 @@
                             <h3 class="font-semibold text-green-800">Phase 2</h3>
                             <div class="flex items-center gap-2">
                                 <span id="phase-2-status-badge" class="text-xs bg-red-200 text-red-800 px-2 py-1">Critical</span>
-                                <i id="phase-2-extended-flag" class="fas fa-flag text-amber-500 hidden" title="Schedule Extended"></i>
+                                <i id="phase-2-extended-flag" class="fas fa-flag text-red-500 hidden" title="Schedule Extended"></i>
                             </div>
                         </div>
                         <p class="text-sm text-green-700 mb-3">Sub-Slab MEP & Concrete</p>
@@ -456,7 +444,7 @@
                             <h3 class="font-semibold text-yellow-800">Phase 3</h3>
                             <div class="flex items-center gap-2">
                                 <span id="phase-3-status-badge" class="text-xs bg-yellow-200 text-yellow-800 px-2 py-1">Planned</span>
-                                <i id="phase-3-extended-flag" class="fas fa-flag text-amber-500 hidden" title="Schedule Extended"></i>
+                                <i id="phase-3-extended-flag" class="fas fa-flag text-red-500 hidden" title="Schedule Extended"></i>
                             </div>
                         </div>
                         <p class="text-sm text-yellow-700 mb-3">Framing & Above-Slab MEP</p>
@@ -470,22 +458,22 @@
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-5 border border-red-200 relative">
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-5 border border-orange-200 relative">
                         <div class="flex justify-between items-start mb-3">
-                            <h3 class="font-semibold text-red-800">Phase 4</h3>
+                            <h3 class="font-semibold text-orange-800">Phase 4</h3>
                             <div class="flex items-center gap-2">
-                                <span id="phase-4-status-badge" class="text-xs bg-red-200 text-red-800 px-2 py-1">Planned</span>
-                                <i id="phase-4-extended-flag" class="fas fa-flag text-amber-500 hidden" title="Schedule Extended"></i>
+                                <span id="phase-4-status-badge" class="text-xs bg-orange-200 text-orange-800 px-2 py-1">Planned</span>
+                                <i id="phase-4-extended-flag" class="fas fa-flag text-red-500 hidden" title="Schedule Extended"></i>
                             </div>
                         </div>
-                        <p class="text-sm text-red-700 mb-3">Finishes & Custom Elements</p>
-                        <div id="phase-4-weeks" class="text-xs text-red-600 mb-2">Weeks 13-16</div>
+                        <p class="text-sm text-orange-700 mb-3">Finishes & Custom Elements</p>
+                        <div id="phase-4-weeks" class="text-xs text-orange-600 mb-2">Weeks 13-16</div>
                         <div class="progress-bar mb-2">
-                            <div id="phase-4-progress" class="progress-fill bg-red-500" style="width: 0%"></div>
+                            <div id="phase-4-progress" class="progress-fill bg-orange-500" style="width: 0%"></div>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="budget-badge">$115,000</span>
-                            <span id="phase-4-status" class="text-xs text-red-600">0 of 8 tasks</span>
+                            <span id="phase-4-status" class="text-xs text-orange-600">0 of 8 tasks</span>
                         </div>
                     </div>
 
@@ -494,7 +482,7 @@
                             <h3 class="font-semibold text-purple-800">Phase 5</h3>
                             <div class="flex items-center gap-2">
                                 <span id="phase-5-status-badge" class="text-xs bg-purple-200 text-purple-800 px-2 py-1">Planned</span>
-                                <i id="phase-5-extended-flag" class="fas fa-flag text-amber-500 hidden" title="Schedule Extended"></i>
+                                <i id="phase-5-extended-flag" class="fas fa-flag text-red-500 hidden" title="Schedule Extended"></i>
                             </div>
                         </div>
                         <p class="text-sm text-purple-700 mb-3">Final Completion</p>
@@ -559,7 +547,6 @@
                     <div class="text-sm text-red-700 space-y-1">
                         <p><strong>Architect Coordination:</strong> Norman Kelley Architecture handles permit submissions. GC maintains communication regarding permit status.</p>
                         <p><strong>Critical Path:</strong> Sub-slab MEP completion must occur before concrete pour (Week 8).</p>
-                        <p><strong>Timeline Adjustments:</strong> Use the duration controls above to adjust phase timelines as needed. Extensions will automatically cascade to subsequent phases.</p>
                     </div>
                 </div>
             </div>
@@ -584,24 +571,16 @@
                     <h2 class="text-xl font-semibold text-gray-800">Interactive Project Timeline</h2>
                     <div class="hidden sm:flex items-center space-x-4 text-sm text-gray-600">
                         <div class="flex items-center">
-                            <div class="w-3 h-3 bg-gradient-to-r from-red-400 to-red-500 rounded mr-2"></div>
+                            <div class="w-3 h-3 border-2 border-red-500 bg-transparent rounded mr-2"></div>
                             <span>Critical Path</span>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-3 h-3 bg-gradient-to-r from-amber-400 to-amber-500 rounded mr-2"></div>
+                            <div class="w-3 h-3 bg-gradient-to-r from-red-400 to-red-500 rounded mr-2"></div>
                             <span>Extended Phase</span>
                         </div>
                         <div class="flex items-center">
                             <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
                             <span>Milestone</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" class="mr-2" style="accent-color: #3b82f6;">
-                            <span>GC Tasks</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" class="mr-2" style="accent-color: #8b5cf6;">
-                            <span class="italic">Architect Tasks</span>
                         </div>
                     </div>
                 </div>
@@ -717,7 +696,7 @@
                         startWeek: 13,
                         isCritical: false,
                         budget: '$115,000',
-                        color: 'red'
+                        color: 'orange'
                     },
                     5: { 
                         name: 'Final Completion', 
@@ -776,7 +755,224 @@
                 document.getElementById('total-duration').textContent = `${totalWeeks} Week Duration`;
             }
 
-            // Generate Gantt chart
+            // Save and restore checkbox states when regenerating
+            function saveCheckboxStates() {
+                const states = {};
+                document.querySelectorAll('.task-checkbox, .architect-task').forEach(checkbox => {
+                    const phase = checkbox.getAttribute('data-phase');
+                    const task = checkbox.getAttribute('data-task');
+                    if (phase && task) {
+                        if (!states[phase]) states[phase] = {};
+                        states[phase][task] = checkbox.checked;
+                    }
+                });
+                return states;
+            }
+
+            function restoreCheckboxStates(states) {
+                Object.keys(states).forEach(phase => {
+                    Object.keys(states[phase]).forEach(task => {
+                        const checkbox = document.querySelector(`[data-phase="${phase}"][data-task="${task}"]`);
+                        if (checkbox && states[phase][task]) {
+                            checkbox.checked = true;
+                            const taskItem = checkbox.closest('.task-item');
+                            if (taskItem) {
+                                taskItem.classList.add('completed');
+                            }
+                        }
+                    });
+                });
+                
+                // Update progress bars after restoring states
+                updateProgress();
+            }
+            function getPhaseTaskDetails(phaseNum, phase, isExtended) {
+                const taskData = {
+                    1: {
+                        sections: [
+                            {
+                                title: 'Permits & Documentation',
+                                icon: 'fas fa-file-alt',
+                                note: 'Note: Permit submissions are handled by Norman Kelley Architecture. GC coordinates and tracks progress.',
+                                tasks: [
+                                    { id: 'submit-building-permit', text: 'Submit building permit application', architect: true },
+                                    { id: 'submit-trade-permits', text: 'Submit all trade permit applications', architect: true },
+                                    { id: 'zoning-compliance', text: 'Coordinate zoning compliance verification', architect: true },
+                                    { id: 'insurance-bonding', text: 'Insurance certificates and bonding', architect: false },
+                                    { id: 'contract-execution', text: 'Contract execution and project setup', architect: false }
+                                ]
+                            },
+                            {
+                                title: 'Pre-Construction Activities',
+                                icon: 'fas fa-tools',
+                                tasks: [
+                                    { id: 'conditions-survey', text: 'Conduct existing conditions survey', architect: false },
+                                    { id: 'temp-utilities', text: 'Establish temporary utilities', architect: false },
+                                    { id: 'construction-trailer', text: 'Set up construction trailer/office', architect: false },
+                                    { id: 'order-materials', text: 'Order long-lead materials (storefront - 12-16 weeks)', architect: false, important: true },
+                                    { id: 'preconstruction-meeting', text: 'Schedule pre-construction meeting', architect: false },
+                                    { id: 'permit-processing', text: 'Week 2: Monitor permit processing & material procurement', architect: false },
+                                    { id: 'site-preparation', text: 'Week 3: Complete site preparation & labor planning', architect: false },
+                                    { id: 'permit-approvals', text: 'Week 4: Obtain permit approvals & final preparations', architect: false }
+                                ]
+                            }
+                        ]
+                    },
+                    2: {
+                        sections: [
+                            {
+                                title: 'Critical Activities',
+                                icon: 'fas fa-exclamation-triangle',
+                                tasks: [
+                                    { id: 'storefront-demo', text: 'Week 5: Storefront demo & site prep', architect: false },
+                                    { id: 'subslab-mep-phase1', text: 'Week 6: Sub-slab MEP rough-in Phase 1', architect: false },
+                                    { id: 'subslab-inspection', text: 'Week 7: Sub-slab inspection & approval', architect: false, important: true },
+                                    { id: 'concrete-pour', text: 'Week 8: Landlord concrete slab pour', architect: false, important: true }
+                                ]
+                            },
+                            {
+                                title: 'Coordination Requirements',
+                                icon: 'fas fa-handshake',
+                                tasks: [
+                                    { id: 'daily-coordination', text: 'Daily coordination with landlord\'s concrete contractor', architect: false },
+                                    { id: 'mep-pass-required', text: 'Sub-slab MEP MUST pass inspection before concrete', architect: false, important: true },
+                                    { id: 'truck-access', text: 'Maintain cement truck access throughout', architect: false },
+                                    { id: 'cure-time', text: 'Monitor 28-day cure time before polished concrete', architect: false }
+                                ]
+                            }
+                        ]
+                    },
+                    3: {
+                        sections: [
+                            {
+                                title: 'Framing & Structure',
+                                icon: 'fas fa-hammer',
+                                tasks: [
+                                    { id: 'metal-stud-framing', text: 'Metal stud framing for new walls', architect: false },
+                                    { id: 'door-window-openings', text: 'Door and window rough openings', architect: false },
+                                    { id: 'framing-inspection', text: 'Framing inspection', architect: false },
+                                    { id: 'drywall-installation', text: 'Drywall installation and finishing', architect: false }
+                                ]
+                            },
+                            {
+                                title: 'Above-Slab MEP',
+                                icon: 'fas fa-plug',
+                                tasks: [
+                                    { id: 'electrical-circuits', text: 'Electrical circuits and outlets', architect: false },
+                                    { id: 'plumbing-connections', text: 'Plumbing connections and fixtures', architect: false },
+                                    { id: 'hvac-ductwork', text: 'HVAC ductwork installation', architect: false },
+                                    { id: 'fire-protection', text: 'Fire protection rough-in', architect: false }
+                                ]
+                            }
+                        ]
+                    },
+                    4: {
+                        sections: [
+                            {
+                                title: 'Interior Finishes',
+                                icon: 'fas fa-paint-brush',
+                                tasks: [
+                                    { id: 'interior-painting', text: 'Interior painting and trim work', architect: false },
+                                    { id: 'mep-trimout', text: 'MEP trim-out and fixtures', architect: false },
+                                    { id: 'polished-concrete', text: 'Polished concrete (after 28-day cure)', architect: false },
+                                    { id: 'custom-millwork', text: 'Custom millwork installation', architect: false }
+                                ]
+                            },
+                            {
+                                title: 'Custom Elements',
+                                icon: 'fas fa-wrench',
+                                tasks: [
+                                    { id: 'storefront-installation', text: 'Steel and glass storefront installation', architect: false },
+                                    { id: 'security-bollards', text: 'Retractable bollards and security', architect: false },
+                                    { id: 'hanging-rack-system', text: 'Stainless steel hanging rack system', architect: false },
+                                    { id: 'leather-hardware', text: 'Leather-wrapped hardware details', architect: false }
+                                ]
+                            }
+                        ]
+                    },
+                    5: {
+                        sections: [
+                            {
+                                title: 'Testing & Inspections',
+                                icon: 'fas fa-clipboard-check',
+                                tasks: [
+                                    { id: 'hvac-balancing', text: 'HVAC system balancing and testing', architect: false },
+                                    { id: 'fire-protection-testing', text: 'Fire protection system testing', architect: false },
+                                    { id: 'final-inspection', text: 'Final building inspection', architect: false },
+                                    { id: 'punch-list', text: 'Punch list completion', architect: false }
+                                ]
+                            },
+                            {
+                                title: 'Project Handover',
+                                icon: 'fas fa-key',
+                                tasks: [
+                                    { id: 'certificate-occupancy', text: 'Certificate of Occupancy', architect: false },
+                                    { id: 'owner-walkthrough', text: 'Owner walkthrough and training', architect: false },
+                                    { id: 'key-turnover', text: 'Key and document turnover', architect: false },
+                                    { id: 'final-cleaning', text: 'Final cleaning and closeout', architect: false }
+                                ]
+                            }
+                        ]
+                    }
+                };
+
+                const phaseData = taskData[phaseNum];
+                if (!phaseData) return '';
+
+                let html = '<div class="grid md:grid-cols-2 gap-6 p-6">';
+                
+                phaseData.sections.forEach(section => {
+                    html += `
+                        <div class="bg-${phase.color}-50 p-5 border border-${phase.color}-100">
+                            <h4 class="font-semibold text-${phase.color}-800 mb-3 flex items-center">
+                                <i class="${section.icon} mr-2"></i>
+                                ${section.title}
+                            </h4>
+                    `;
+                    
+                    if (section.note) {
+                        html += `
+                            <div class="mb-3 p-3 bg-purple-50 border border-purple-200">
+                                <p class="text-xs text-purple-700 font-medium">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    ${section.note}
+                                </p>
+                            </div>
+                        `;
+                    }
+                    
+                    html += '<div class="space-y-2 text-sm text-' + phase.color + '-700">';
+                    
+                    section.tasks.forEach(task => {
+                        const taskClass = task.architect ? 'architect-task' : 'task-checkbox';
+                        const badge = task.architect ? '<span class="text-xs bg-blue-200 text-blue-800 px-2 py-1 rounded-full ml-2">Architect</span>' : '';
+                        const emphasis = task.important ? '<strong>' : '';
+                        const emphasisEnd = task.important ? '</strong>' : '';
+                        
+                        html += `
+                            <div class="task-item">
+                                <input type="checkbox" class="${taskClass}" data-phase="${phaseNum}" data-task="${task.id}">
+                                <span>${emphasis}${task.text}${emphasisEnd} ${badge}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div></div>';
+                });
+                
+                if (isExtended) {
+                    html += `
+                        <div class="md:col-span-2 mt-3 p-3 bg-red-50 border border-red-200 rounded">
+                            <p class="text-sm text-red-700">
+                                <strong>Timeline Extended:</strong> This phase has been extended by ${phase.currentDuration - phase.originalDuration} week(s) beyond the original schedule.
+                            </p>
+                        </div>
+                    `;
+                }
+                
+                html += '</div>';
+                return html;
+            }
             function generateGanttChart() {
                 const ganttPhasesContainer = document.getElementById('gantt-phases');
                 ganttPhasesContainer.innerHTML = '';
@@ -802,13 +998,13 @@
                                 <h3 class="text-lg font-semibold text-${phase.color}-800">Phase ${phaseNum}: ${phase.name}</h3>
                                 <p class="text-sm text-${phase.color}-600">
                                     ${phase.isCritical ? 'Critical path activities' : 'Standard project activities'}
-                                    ${isExtended ? ' - <span class="text-amber-600 font-medium">Extended Timeline</span>' : ''}
+                                    ${isExtended ? ' - <span class="text-red-600 font-medium">Extended Timeline</span>' : ''}
                                 </p>
                             </div>
                             <div class="text-right">
                                 <div class="text-sm font-medium text-${phase.color}-700">Weeks ${phase.startWeek}-${endWeek}</div>
                                 <div class="text-xs text-${phase.color}-600">${phase.budget} budget</div>
-                                ${isExtended ? '<div class="text-xs text-amber-600 font-medium">+' + (phase.currentDuration - phase.originalDuration) + ' weeks extended</div>' : ''}
+                                ${isExtended ? '<div class="text-xs text-red-600 font-medium">+' + (phase.currentDuration - phase.originalDuration) + ' weeks extended</div>' : ''}
                             </div>
                         </div>
                         
@@ -823,25 +1019,20 @@
                                         </div>
                                     </div>
                                     <div class="flex-1 flex relative" style="min-height: 50px;">
-                                        <div class="gantt-bar ${isExtended ? 'extended-phase' : (phase.isCritical ? 'critical-path' : `bg-gradient-to-r from-${phase.color}-400 to-${phase.color}-500`)} absolute" 
+                                        <div class="gantt-bar ${isExtended ? 'extended-phase' : `bg-gradient-to-r from-${phase.color}-400 to-${phase.color}-500`} ${phase.isCritical ? 'critical-path' : ''} absolute" 
                                              style="left: ${leftPercent}%; width: ${widthPercent}%;"
                                              data-phase="${phaseNum}"
                                              data-original-duration="${phase.originalDuration}"
                                              data-current-duration="${phase.currentDuration}">
                                             ${phase.name}
-                                            <div class="milestone bg-${phase.color}-700" style="left: 100%;"></div>
+                                            <div class="milestone bg-blue-500" style="left: 100%;"></div>
                                             ${isExtended ? '<div class="extended-indicator">!</div>' : (phase.isCritical ? '<div class="risk-indicator">!</div>' : '')}
-                                            <div class="week-indicator">W${phase.startWeek}-${endWeek}</div>
                                             <div class="resize-handle" data-phase="${phaseNum}"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div id="phase${phaseNum}-details" class="task-details pl-80 ml-4 border-l-2 border-${phase.color}-200">
-                                    <div class="p-6 bg-${phase.color}-50 border border-${phase.color}-100">
-                                        <h4 class="font-semibold text-${phase.color}-800 mb-3">Phase ${phaseNum} Activities</h4>
-                                        <p class="text-sm text-${phase.color}-700">Detailed task breakdown and coordination requirements for this phase.</p>
-                                        ${isExtended ? '<div class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded"><p class="text-sm text-amber-700"><strong>Timeline Extended:</strong> This phase has been extended by ' + (phase.currentDuration - phase.originalDuration) + ' week(s) beyond the original schedule.</p></div>' : ''}
-                                    </div>
+                                    ${getPhaseTaskDetails(phaseNum, phase, isExtended)}
                                 </div>
                             </div>
                         </div>
@@ -1086,7 +1277,7 @@
                         document.removeEventListener('mousemove', handleResize);
                         document.removeEventListener('mouseup', stopResize);
                         
-                        showNotification('Phase duration updated successfully!', 'success');
+                        showNotification('Phase duration updated successfully! Task progress preserved.', 'success');
                     }
                 }
 
@@ -1106,6 +1297,9 @@
                 // Reset timeline button
                 document.getElementById('reset-timeline').addEventListener('click', function() {
                     if (confirm('Reset all phases to original timeline? This will not affect task progress.')) {
+                        // Save current task completion states
+                        const savedStates = saveCheckboxStates();
+                        
                         Object.keys(projectData.phases).forEach(phaseNum => {
                             projectData.phases[phaseNum].currentDuration = projectData.phases[phaseNum].originalDuration;
                         });
@@ -1121,7 +1315,11 @@
                         generateGanttChart();
                         generatePaymentMilestones();
                         updatePhaseDisplays();
-                        showNotification('Timeline reset to original schedule.', 'info');
+                        
+                        // Restore task completion states
+                        restoreCheckboxStates(savedStates);
+                        
+                        showNotification('Timeline reset to original schedule. Task progress preserved.', 'info');
                     }
                 });
 
@@ -1129,9 +1327,12 @@
                 document.getElementById('reset-progress').addEventListener('click', function() {
                     if (confirm('Are you sure you want to reset all progress? This action cannot be undone.')) {
                         // Reset task progress
-                        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                        document.querySelectorAll('.task-checkbox, .architect-task').forEach(checkbox => {
                             checkbox.checked = false;
-                            checkbox.closest('.task-item').classList.remove('completed');
+                            const taskItem = checkbox.closest('.task-item');
+                            if (taskItem) {
+                                taskItem.classList.remove('completed');
+                            }
                         });
                         
                         // Reset payment progress
@@ -1199,13 +1400,20 @@
 
             // Update phase duration
             function updatePhaseDuration(phaseNum, newDuration) {
+                // Save current task completion states
+                const savedStates = saveCheckboxStates();
+                
                 projectData.phases[phaseNum].currentDuration = newDuration;
                 recalculatePhaseStarts(phaseNum);
                 generateWeekHeaders();
                 generateGanttChart();
                 generatePaymentMilestones();
                 updatePhaseDisplays();
-                showNotification(`Phase ${phaseNum} duration updated to ${newDuration} weeks.`, 'info');
+                
+                // Restore task completion states
+                restoreCheckboxStates(savedStates);
+                
+                showNotification(`Phase ${phaseNum} duration updated to ${newDuration} weeks. Task progress preserved.`, 'info');
             }
 
             // Attach task toggle listeners
@@ -1222,6 +1430,25 @@
                             icon.classList.toggle('fa-caret-right');
                             icon.classList.toggle('fa-caret-down');
                         }
+                    });
+                });
+
+                // Task checkbox functionality
+                document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const phase = parseInt(this.getAttribute('data-phase'));
+                        const taskItem = this.closest('.task-item');
+                        
+                        if (this.checked) {
+                            taskItem.classList.add('completed');
+                            projectData.phases[phase].completedTasks++;
+                        } else {
+                            taskItem.classList.remove('completed');
+                            projectData.phases[phase].completedTasks--;
+                        }
+                        
+                        updateProgress();
+                        animateProgressUpdate();
                     });
                 });
             }
@@ -1296,6 +1523,17 @@
                 const overallProgress = (totalCompleted / projectData.totalTasks) * 100;
                 document.getElementById('overall-progress').style.width = overallProgress + '%';
                 document.getElementById('progress-display').textContent = Math.round(overallProgress) + '%';
+            }
+
+            // Animate progress update
+            function animateProgressUpdate() {
+                const progressBars = document.querySelectorAll('.progress-fill');
+                progressBars.forEach(bar => {
+                    bar.classList.add('progress-animation');
+                    setTimeout(() => {
+                        bar.classList.remove('progress-animation');
+                    }, 500);
+                });
             }
 
             // Update payment display
