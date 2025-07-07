@@ -560,7 +560,6 @@
                         <p><strong>Architect Coordination:</strong> Norman Kelley Architecture handles permit submissions. GC maintains communication regarding permit status.</p>
                         <p><strong>Critical Path:</strong> Sub-slab MEP completion must occur before concrete pour (Week 8).</p>
                         <div class="mt-4 p-3 bg-red-100 border border-red-300 rounded">
-                            <p class="font-medium mb-2">How to Use This Timeline:</p>
                             <p class="mb-2">• <strong>Task Tracking:</strong> Expand each Phase below to view detailed tasks. Use checkboxes to track and report progress on individual activities.</p>
                             <p>• <strong>Timeline Adjustments:</strong> Adjust the start date above as needed, or drag the right edge of any Phase bar below to extend or reduce that phase's duration. Timeline extensions will automatically cascade to subsequent phases.</p>
                         </div>
@@ -1141,6 +1140,13 @@
             // Generate payment milestones
             function generatePaymentMilestones() {
                 const container = document.getElementById('payment-milestones');
+                
+                // Save current payment states before regenerating
+                const savedPaymentStates = {};
+                document.querySelectorAll('.payment-checkbox').forEach(checkbox => {
+                    savedPaymentStates[checkbox.id] = checkbox.checked;
+                });
+                
                 container.innerHTML = '';
                 
                 paymentMilestones.forEach((milestone, index) => {
@@ -1156,7 +1162,7 @@
                             <div class="text-sm font-semibold text-blue-800">${milestone.description}</div>
                             <div class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">${milestone.percentage}%</div>
                         </div>
-                        <div class="text-lg font-bold text-blue-900 mb-1">$${milestone.amount.toLocaleString()}</div>
+                        <div class="text-lg font-bold text-blue-900 mb-1">${milestone.amount.toLocaleString()}</div>
                         <div class="text-xs text-blue-600">${adjustedTiming}</div>
                         <div class="mt-2">
                             <input type="checkbox" id="${milestone.id}" class="payment-checkbox mr-2">
@@ -1165,6 +1171,18 @@
                     `;
                     
                     container.appendChild(milestoneDiv);
+                });
+                
+                // Restore payment states and visual appearance
+                Object.keys(savedPaymentStates).forEach(checkboxId => {
+                    const checkbox = document.getElementById(checkboxId);
+                    if (checkbox && savedPaymentStates[checkboxId]) {
+                        checkbox.checked = true;
+                        const milestoneCard = checkbox.closest('.payment-milestone');
+                        if (milestoneCard) {
+                            milestoneCard.classList.add('completed');
+                        }
+                    }
                 });
                 
                 // Re-attach payment event listeners
