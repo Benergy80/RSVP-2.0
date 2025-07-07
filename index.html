@@ -280,6 +280,8 @@
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
+
+            // Show notification
             .gantt-bar {
                 height: 28px;
                 font-size: 10px;
@@ -1494,74 +1496,8 @@
 
                 // Export timeline as PDF
                 document.getElementById('export-timeline').addEventListener('click', function() {
-                    // Create a printable version of the timeline
-                    const originalTitle = document.title;
-                    document.title = `RSVP Gallery 2.0 Timeline - ${new Date().toLocaleDateString()}`;
-                    
-                    // Add print-specific styles
-                    const printStyles = document.createElement('style');
-                    printStyles.id = 'print-styles';
-                    printStyles.innerHTML = `
-                        @media print {
-                            body { 
-                                -webkit-print-color-adjust: exact !important;
-                                color-adjust: exact !important;
-                                font-size: 12px;
-                            }
-                            .container { 
-                                max-width: none !important; 
-                                padding: 0 !important;
-                                margin: 0 !important;
-                            }
-                            .gantt-container {
-                                overflow: visible !important;
-                            }
-                            .date-cell {
-                                min-width: 80px !important;
-                                font-size: 10px !important;
-                            }
-                            .gantt-bar {
-                                font-size: 9px !important;
-                                height: 24px !important;
-                            }
-                            .payment-milestone {
-                                page-break-inside: avoid;
-                            }
-                            .bg-gradient-to-br,
-                            .bg-gradient-to-r {
-                                background: #f3f4f6 !important;
-                                border: 1px solid #d1d5db !important;
-                            }
-                            .text-blue-800,
-                            .text-green-800,
-                            .text-yellow-800,
-                            .text-orange-800,
-                            .text-purple-800 {
-                                color: #1f2937 !important;
-                            }
-                            @page {
-                                size: landscape;
-                                margin: 0.5in;
-                            }
-                        }
-                    `;
-                    document.head.appendChild(printStyles);
-                    
-                    // Trigger print dialog
-                    setTimeout(() => {
-                        window.print();
-                        
-                        // Cleanup after print
-                        setTimeout(() => {
-                            document.title = originalTitle;
-                            const printStylesElement = document.getElementById('print-styles');
-                            if (printStylesElement) {
-                                printStylesElement.remove();
-                            }
-                        }, 1000);
-                    }, 500);
-                    
-                    showNotification('PDF export initiated - use your browser print dialog to save as PDF', 'success');
+                    generatePDFReport();
+                    showNotification('PDF report generated - use your browser print dialog to save as PDF', 'success');
                 });
             }
 
@@ -1713,7 +1649,457 @@
                 document.getElementById('remaining-balance').textContent = '$' + remaining.toLocaleString();
             }
 
-            // Show notification
+            // Generate professional PDF report
+            function generatePDFReport() {
+                const startDate = document.getElementById('start-date').value;
+                const currentDate = new Date().toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                
+                // Calculate overall progress
+                const totalCompleted = Object.values(projectData.phases).reduce((sum, phase) => sum + phase.completedTasks, 0);
+                const overallProgress = Math.round((totalCompleted / projectData.totalTasks) * 100);
+                
+                // Calculate project end date
+                let projectEndDate = 'TBD';
+                if (startDate) {
+                    const start = new Date(startDate);
+                    const totalWeeks = getTotalWeeks();
+                    const end = new Date(start);
+                    end.setDate(start.getDate() + ((totalWeeks - 1) * 7));
+                    const dayOfWeek = end.getDay();
+                    end.setDate(end.getDate() - dayOfWeek + 5); // Friday
+                    projectEndDate = end.toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                }
+                
+                // Generate phase summary table
+                let phaseTableRows = '';
+                Object.entries(projectData.phases).forEach(([phaseNum, phase]) => {
+                    const phaseProgress = Math.round((phase.completedTasks / phase.totalTasks) * 100);
+                    const endWeek = phase.startWeek + phase.currentDuration - 1;
+                    const dateRange = getPhaseDisplayDates(phase.startWeek, endWeek);
+                    const status = phase.completedTasks === phase.totalTasks ? 'Complete' : 
+                                  phase.completedTasks > 0 ? 'In Progress' : 'Planned';
+                    const statusClass = phase.completedTasks === phase.totalTasks ? 'status-complete' : 
+                                       phase.completedTasks > 0 ? 'status-progress' : 'status-planned';
+                    
+                    phaseTableRows += `
+                        <tr>
+                            <td>Phase ${phaseNum}</td>
+                            <td>${phase.name}</td>
+                            <td>${dateRange}</td>
+                            <td>${phase.currentDuration} weeks</td>
+                            <td><span class="${statusClass}">${status}</span></td>
+                            <td>${phaseProgress}%</td>
+                            <td>${phase.budget}</td>
+                        </tr>
+                    `;
+                });
+                
+                // Generate payment summary table
+                let paymentTableRows = '';
+                let totalPaidAmount = 0;
+                paymentMilestones.forEach((milestone, index) => {
+                    const checkbox = document.getElementById(milestone.id);
+                    const isPaid = checkbox && checkbox.checked;
+                    if (isPaid) totalPaidAmount += milestone.amount;
+                    
+                    const adjustedWeek = adjustPaymentMilestoneWeek(milestone.week);
+                    const adjustedTiming = milestone.week === 0 ? milestone.timing : getPaymentMilestoneDate(adjustedWeek);
+                    const statusClass = isPaid ? 'status-complete' : 'status-planned';
+                    const statusText = isPaid ? 'Received' : 'Pending';
+                    
+                    paymentTableRows += `
+                        <tr>
+                            <td>${milestone.description}</td>
+                            <td>${milestone.percentage}%</td>
+                            <td>${milestone.amount.toLocaleString()}</td>
+                            <td>${adjustedTiming}</td>
+                            <td><span class="${statusClass}">${statusText}</span></td>
+                        </tr>
+                    `;
+                });
+                
+                // Generate timeline summary
+                const totalExtension = getTotalWeeks() - projectData.originalTotalWeeks;
+                const timelineStatus = totalExtension > 0 ? 
+                    `<span class="status-warning">Extended by ${totalExtension} week(s)</span>` : 
+                    '<span class="status-complete">On Schedule</span>';
+                
+                // Create the PDF content
+                const pdfContent = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>RSVP Gallery 2.0 - Project Timeline Report</title>
+                    <style>
+                        * {
+                            margin: 0;
+                            padding: 0;
+                            box-sizing: border-box;
+                        }
+                        
+                        body {
+                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            background: white;
+                            padding: 40px;
+                        }
+                        
+                        .header {
+                            border-bottom: 3px solid #2563eb;
+                            padding-bottom: 20px;
+                            margin-bottom: 30px;
+                        }
+                        
+                        .header h1 {
+                            font-size: 28px;
+                            color: #1e40af;
+                            margin-bottom: 5px;
+                        }
+                        
+                        .header .subtitle {
+                            font-size: 16px;
+                            color: #6b7280;
+                            margin-bottom: 15px;
+                        }
+                        
+                        .header-info {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 20px;
+                            margin-top: 15px;
+                        }
+                        
+                        .info-section h3 {
+                            font-size: 14px;
+                            color: #374151;
+                            margin-bottom: 8px;
+                            font-weight: 600;
+                        }
+                        
+                        .info-section p {
+                            font-size: 13px;
+                            color: #6b7280;
+                            margin-bottom: 4px;
+                        }
+                        
+                        .executive-summary {
+                            background: #f8fafc;
+                            border: 1px solid #e2e8f0;
+                            border-radius: 8px;
+                            padding: 25px;
+                            margin-bottom: 30px;
+                        }
+                        
+                        .executive-summary h2 {
+                            font-size: 20px;
+                            color: #1e40af;
+                            margin-bottom: 15px;
+                        }
+                        
+                        .summary-grid {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 20px;
+                        }
+                        
+                        .summary-item {
+                            text-align: center;
+                            padding: 15px;
+                            background: white;
+                            border-radius: 6px;
+                            border: 1px solid #e2e8f0;
+                        }
+                        
+                        .summary-value {
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #1e40af;
+                            margin-bottom: 5px;
+                        }
+                        
+                        .summary-label {
+                            font-size: 12px;
+                            color: #6b7280;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                        }
+                        
+                        .section {
+                            margin-bottom: 35px;
+                        }
+                        
+                        .section h2 {
+                            font-size: 18px;
+                            color: #1e40af;
+                            margin-bottom: 15px;
+                            padding-bottom: 8px;
+                            border-bottom: 2px solid #e2e8f0;
+                        }
+                        
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 10px;
+                            font-size: 12px;
+                        }
+                        
+                        th {
+                            background: #f1f5f9;
+                            color: #334155;
+                            font-weight: 600;
+                            padding: 12px 8px;
+                            text-align: left;
+                            border-bottom: 2px solid #e2e8f0;
+                        }
+                        
+                        td {
+                            padding: 10px 8px;
+                            border-bottom: 1px solid #f1f5f9;
+                        }
+                        
+                        tr:nth-child(even) {
+                            background: #fafafa;
+                        }
+                        
+                        .status-complete {
+                            background: #dcfce7;
+                            color: #166534;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-size: 11px;
+                            font-weight: 500;
+                        }
+                        
+                        .status-progress {
+                            background: #fef3c7;
+                            color: #92400e;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-size: 11px;
+                            font-weight: 500;
+                        }
+                        
+                        .status-planned {
+                            background: #e0e7ff;
+                            color: #3730a3;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-size: 11px;
+                            font-weight: 500;
+                        }
+                        
+                        .status-warning {
+                            background: #fee2e2;
+                            color: #991b1b;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-size: 11px;
+                            font-weight: 500;
+                        }
+                        
+                        .footer {
+                            margin-top: 40px;
+                            padding-top: 20px;
+                            border-top: 1px solid #e2e8f0;
+                            text-align: center;
+                            font-size: 11px;
+                            color: #6b7280;
+                        }
+                        
+                        @media print {
+                            body {
+                                padding: 20px;
+                                font-size: 11px;
+                            }
+                            
+                            .header h1 {
+                                font-size: 24px;
+                            }
+                            
+                            .executive-summary h2,
+                            .section h2 {
+                                font-size: 16px;
+                            }
+                            
+                            .summary-value {
+                                font-size: 20px;
+                            }
+                            
+                            table {
+                                font-size: 10px;
+                            }
+                            
+                            th, td {
+                                padding: 6px 4px;
+                            }
+                            
+                            @page {
+                                size: letter;
+                                margin: 0.75in;
+                            }
+                            
+                            .section {
+                                page-break-inside: avoid;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>RSVP Gallery 2.0</h1>
+                        <div class="subtitle">Project Timeline & Progress Report</div>
+                        
+                        <div class="header-info">
+                            <div class="info-section">
+                                <h3>Project Information</h3>
+                                <p><strong>Location:</strong> 212 N Aberdeen Street, Chicago, IL</p>
+                                <p><strong>Area:</strong> 3,855 Square Feet</p>
+                                <p><strong>Budget:</strong> $450,000</p>
+                                <p><strong>Duration:</strong> ${getTotalWeeks()} Weeks</p>
+                            </div>
+                            <div class="info-section">
+                                <h3>Project Team</h3>
+                                <p><strong>Architect:</strong> Norman Kelley Architecture</p>
+                                <p><strong>General Contractor:</strong> ChiLab Studio LLC</p>
+                                <p><strong>Subcontractor:</strong> Max Davis Group</p>
+                                <p><strong>Report Date:</strong> ${currentDate}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="executive-summary">
+                        <h2>Executive Summary</h2>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <div class="summary-value">${overallProgress}%</div>
+                                <div class="summary-label">Overall Progress</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value">${totalCompleted}</div>
+                                <div class="summary-label">Tasks Completed</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value">${totalPaidAmount.toLocaleString()}</div>
+                                <div class="summary-label">Payments Received</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-value">${timelineStatus}</div>
+                                <div class="summary-label">Schedule Status</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2>Project Timeline</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Phase</th>
+                                    <th>Description</th>
+                                    <th>Date Range</th>
+                                    <th>Duration</th>
+                                    <th>Status</th>
+                                    <th>Progress</th>
+                                    <th>Budget</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${phaseTableRows}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="section">
+                        <h2>Payment Schedule</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Milestone</th>
+                                    <th>Percentage</th>
+                                    <th>Amount</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${paymentTableRows}
+                            </tbody>
+                        </table>
+                        
+                        <div style="margin-top: 15px; padding: 15px; background: #f8fafc; border-radius: 6px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 13px;">
+                                <div><strong>Total Payments Received:</strong> ${totalPaidAmount.toLocaleString()}</div>
+                                <div><strong>Remaining Balance:</strong> ${(450000 - totalPaidAmount).toLocaleString()}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2>Project Dates</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Milestone</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Project Start</td>
+                                    <td>${startDate ? new Date(startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'TBD'}</td>
+                                    <td><span class="${startDate ? 'status-complete' : 'status-planned'}">${startDate ? 'Scheduled' : 'Pending'}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Project Completion</td>
+                                    <td>${projectEndDate}</td>
+                                    <td><span class="status-planned">Projected</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Original Duration</td>
+                                    <td>${projectData.originalTotalWeeks} weeks</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>Current Duration</td>
+                                    <td>${getTotalWeeks()} weeks</td>
+                                    <td>${timelineStatus}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="footer">
+                        <p>Generated by ChiLab Studio Project Management System • ${currentDate}</p>
+                        <p>This report reflects project status as of the report generation date.</p>
+                    </div>
+                </body>
+                </html>
+                `;
+                
+                // Open in new window for printing
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(pdfContent);
+                printWindow.document.close();
+                
+                // Auto-trigger print dialog after content loads
+                printWindow.onload = function() {
+                    setTimeout(() => {
+                        printWindow.print();
+                    }, 500);
+                };
+            }
             function showNotification(message, type = 'info') {
                 const notification = document.createElement('div');
                 const colors = {
