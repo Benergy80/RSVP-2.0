@@ -586,10 +586,7 @@
                     <div class="text-sm text-red-700 space-y-2">
                         <p><strong>Architect Coordination:</strong> Norman Kelley Architecture handles permit submissions. GC maintains communication regarding permit status.</p>
                         <p><strong>Critical Path:</strong> Sub-slab MEP completion must occur before concrete pour (Week 8).</p>
-                        <div class="mt-4 p-3 bg-red-100 border border-red-300 rounded">
-                            <p class="mb-2">• <strong>Task Tracking:</strong> Expand each Phase or Trade below to view detailed tasks. Use checkboxes to track and report progress on individual activities.</p>
-                            <p>• <strong>Timeline Adjustments:</strong> Adjust the start date above as needed, or drag the right edge of any Phase bar below to extend or reduce that phase's duration. Timeline extensions will automatically cascade to subsequent phases.</p>
-                        </div>
+                        <!-- Instructions sub-panel has been removed from here -->
                     </div>
                 </div>
             </div>
@@ -634,6 +631,17 @@
                         <div id="week-headers" class="flex min-w-max w-full" style="padding-right: 20px;">
                             <!-- Week headers will be generated here -->
                         </div>
+                    </div>
+                </div>
+
+                <!-- NEW INSTRUCTIONS LOCATION AND STYLE -->
+                <div class="mb-4">
+                    <button id="toggle-instructions" class="text-sm text-blue-600 hover:text-blue-800 hover:underline focus:outline-none font-medium">
+                        <i class="fas fa-info-circle mr-1"></i>Show Instructions
+                    </button>
+                    <div id="instructions-content" class="hidden mt-2 p-4 bg-gray-50 border border-gray-200 text-sm text-gray-700 space-y-2">
+                        <p>• <strong>Task Tracking:</strong> Expand each Phase or Trade below to view detailed tasks. Use checkboxes to track and report progress on individual activities.</p>
+                        <p>• <strong>Timeline Adjustments:</strong> Adjust the start date above in the Timeline Management panel as needed, or drag the right edge of any Phase bar below to extend or reduce that phase's duration. Timeline extensions will automatically cascade to subsequent phases.</p>
                     </div>
                 </div>
 
@@ -735,8 +743,7 @@
                             <div id="fabrication-progress" class="progress-fill bg-purple-500" style="width: 0%"></div>
                         </div>
                         <div class="flex justify-between items-center text-xs">
-                            <!-- Updated Total from 8 to 7 -->
-                            <span class="text-purple-600"><span id="fabrication-completed">0</span> of <span id="fabrication-total">7</span> tasks</span>
+                            <span class="text-purple-600"><span id="fabrication-completed">0</span> of <span id="fabrication-total">8</span> tasks</span>
                             <span class="text-purple-600">Week 13-16</span>
                         </div>
                     </div>
@@ -976,8 +983,7 @@
                                     <i class="fas fa-hammer text-purple-600 text-lg mr-3"></i>
                                     <h4 class="font-semibold text-purple-800">Fabrication Tasks</h4>
                                 </div>
-                                <!-- Updated Total from 8 to 7 -->
-                                <span class="text-xs text-purple-600">0 of 7 complete</span>
+                                <span class="text-xs text-purple-600">0 of 8 complete</span>
                             </div>
                             <div class="text-sm text-purple-700 ml-9">ChiLab Studio • Week 13-16</div>
                         </div>
@@ -1098,28 +1104,23 @@
                 electrical: { completed: 0, total: 20 },
                 mechanical: { completed: 0, total: 12 },
                 plumbing: { completed: 0, total: 15 },
-                // Updated fabrication total from 8 to 7
-                fabrication: { completed: 0, total: 7 } 
+                fabrication: { completed: 0, total: 8 } 
             };
 
             // Update progress when checkboxes change for TRADES
             function updateTradeProgress(tradeName) {
                 const checkboxes = document.querySelectorAll(`[data-trade="${tradeName}"]`);
                 const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
-                // Ensure we count actual checkboxes on the page for the total, overriding initial data if necessary
                 const total = checkboxes.length; 
                 
-                // Update trade data
                 tradeData[tradeName].completed = completed;
                 tradeData[tradeName].total = total;
                 
-                // Update UI in cards
                 const progressBar = document.getElementById(`${tradeName}-progress`);
                 const completedSpan = document.getElementById(`${tradeName}-completed`);
                 const totalSpan = document.getElementById(`${tradeName}-total`);
                 const statusBadge = document.getElementById(`${tradeName}-status`);
                 
-                // Update UI in task headers
                 const taskHeader = document.querySelector(`[data-target="${tradeName}-details"] .text-xs`);
                 
                 const progressPercent = total > 0 ? (completed / total) * 100 : 0;
@@ -1131,7 +1132,6 @@
                     taskHeader.textContent = `${completed} of ${total} complete`;
                 }
                 
-                // Update status badge
                 let status = 'not-started';
                 let statusText = 'Not Started';
                 
@@ -1359,6 +1359,17 @@
 
             // Initialize the timeline
             function initializeTimeline() {
+                // --- Initialize Instructions Toggle ---
+                const instructionsToggle = document.getElementById('toggle-instructions');
+                const instructionsContent = document.getElementById('instructions-content');
+
+                instructionsToggle.addEventListener('click', () => {
+                    const isHidden = instructionsContent.classList.toggle('hidden');
+                    instructionsToggle.innerHTML = isHidden 
+                        ? '<i class="fas fa-info-circle mr-1"></i>Show Instructions' 
+                        : '<i class="fas fa-info-circle mr-1"></i>Hide Instructions';
+                });
+
                 generateWeekHeaders();
                 generateGanttChart();
                 generatePaymentMilestones();
